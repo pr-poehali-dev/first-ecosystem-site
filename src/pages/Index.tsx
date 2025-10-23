@@ -94,9 +94,7 @@ const Index = () => {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center animate-fade-in">
             <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">ANDREAS FIRST</h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-              Создаём проекты, которые делают жизнь людей проще
-            </p>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">Создаём проекты, которые делают жизнь людей и сотрудников Wildberries проще</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
