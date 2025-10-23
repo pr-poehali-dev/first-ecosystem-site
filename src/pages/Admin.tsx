@@ -25,9 +25,12 @@ const Admin = () => {
   const [loading, setLoading] = useState(false);
   const [editingSound, setEditingSound] = useState<Sound | null>(null);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [uploadingFile, setUploadingFile] = useState(false);
+  const [uploadedFileUrl, setUploadedFileUrl] = useState('');
   const { toast } = useToast();
 
   const ADMIN_URL = 'https://functions.poehali.dev/4d17a761-5d43-44ce-b352-abea791cfd9d';
+  const UPLOAD_URL = 'https://functions.poehali.dev/3d95d879-761a-43a5-ad5b-04ce23a2ba36';
 
   useEffect(() => {
     const savedPassword = localStorage.getItem('admin_password');
@@ -76,15 +79,78 @@ const Admin = () => {
     }
   };
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('audio/')) {
+      toast({
+        title: 'Ошибка',
+        description: 'Можно загружать только аудио файлы',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    setUploadingFile(true);
+
+    try {
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const base64 = reader.result as string;
+        const base64Content = base64.split(',')[1];
+
+        const response = await fetch(UPLOAD_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Admin-Password': localStorage.getItem('admin_password') || ''
+          },
+          body: JSON.stringify({
+            file: base64Content,
+            filename: file.name
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setUploadedFileUrl(data.file_url);
+          toast({
+            title: 'Успешно',
+            description: 'Файл загружен'
+          });
+        } else {
+          toast({
+            title: 'Ошибка',
+            description: 'Не удалось загрузить файл',
+            variant: 'destructive'
+          });
+        }
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      toast({
+        title: 'Ошибка',
+        description: 'Проблема с загрузкой файла',
+        variant: 'destructive'
+      });
+    } finally {
+      setUploadingFile(false);
+    }
+  };
+
   const handleAddSound = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
+    const fileUrl = uploadedFileUrl || (formData.get('file_url') as string);
+    
     const newSound = {
       title: formData.get('title') as string,
       description: formData.get('description') as string,
-      file_url: formData.get('file_url') as string,
+      file_url: fileUrl,
       category: formData.get('category') as string
     };
 
@@ -104,6 +170,7 @@ const Admin = () => {
           description: 'Звук добавлен'
         });
         setIsAddDialogOpen(false);
+        setUploadedFileUrl('');
         fetchSounds(localStorage.getItem('admin_password') || '');
       } else {
         toast({
@@ -325,7 +392,7 @@ const Admin = () => {
         </div>
       </section>
 
-      <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+      <Dialog open={isAddDialogOpen} onOpenChange={(open) => { setIsAddDialogOpen(open); if (!open) setUploadedFileUrl(''); }}>
         <DialogContent className="glass-card">
           <DialogHeader>
             <DialogTitle>Добавить новый звук</DialogTitle>
@@ -340,14 +407,37 @@ const Admin = () => {
               <Textarea id="add-description" name="description" />
             </div>
             <div>
-              <Label htmlFor="add-file-url">URL файла</Label>
-              <Input id="add-file-url" name="file_url" type="url" required />
+              <Label htmlFor="add-file">Загрузить аудиофайл</Label>
+              <Input 
+                id="add-file" 
+                type="file" 
+                accept="audio/*"
+                onChange={handleFileUpload}
+                disabled={uploadingFile}
+              />
+              {uploadingFile && <p className="text-xs text-muted-foreground mt-1">Загрузка...</p>}
+              {uploadedFileUrl && (
+                <div className="mt-2 p-2 bg-green-50 rounded text-xs text-green-700">
+                  ✓ Файл загружен: {uploadedFileUrl}
+                </div>
+              )}
+            </div>
+            <div>
+              <Label htmlFor="add-file-url">Или введите URL</Label>
+              <Input 
+                id="add-file-url" 
+                name="file_url" 
+                type="url" 
+                placeholder="https://..." 
+                value={uploadedFileUrl}
+                onChange={(e) => setUploadedFileUrl(e.target.value)}
+              />
             </div>
             <div>
               <Label htmlFor="add-category">Категория</Label>
               <Input id="add-category" name="category" required />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full" disabled={loading || uploadingFile}>
               {loading ? 'Добавление...' : 'Добавить'}
             </Button>
           </form>

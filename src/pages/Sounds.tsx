@@ -212,6 +212,10 @@ const Sounds = () => {
               <Button variant="ghost" onClick={() => window.location.href = '/'}>
                 Главная
               </Button>
+              <Button variant="ghost" size="sm" onClick={() => window.location.href = '/admin'}>
+                <Icon name="Settings" size={16} className="mr-1" />
+                Админка
+              </Button>
               {isAuthenticated ? (
                 <div className="flex items-center gap-3">
                   <span className="text-sm text-muted-foreground">Привет, {user?.username}!</span>

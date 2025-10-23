@@ -1,0 +1,31 @@
+{
+  "tests": [
+    {
+      "name": "Test unauthorized upload",
+      "method": "POST",
+      "body": {
+        "file": "base64content",
+        "filename": "test.mp3"
+      },
+      "expectedStatus": 401,
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Test authorized upload",
+      "method": "POST",
+      "headers": {
+        "X-Admin-Password": "2501"
+      },
+      "body": {
+        "file": "base64content",
+        "filename": "test.mp3"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "file_url": "string",
+        "filename": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

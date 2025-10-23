@@ -289,9 +289,20 @@ const Index = () => {
                 className="h-10"
               />
             </div>
-            <p className="text-sm text-muted-foreground">
-              © 2024 FIRST Ecosystem. Делаем жизнь людей проще
-            </p>
+            <div className="flex items-center gap-4">
+              <p className="text-sm text-muted-foreground">
+                © 2024 FIRST Ecosystem. Делаем жизнь людей проще
+              </p>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => window.location.href = '/admin'}
+                className="text-xs text-muted-foreground hover:text-foreground"
+              >
+                <Icon name="Settings" size={14} className="mr-1" />
+                Admin
+              </Button>
+            </div>
           </div>
         </div>
       </footer>
