@@ -88,9 +88,7 @@ const Index = () => {
       <section id="home" className="pt-32 pb-24 px-6">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center animate-fade-in">
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">
-              FIRST ECOSYSTEM
-            </h1>
+            <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">ANDREAS FIRST</h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
               Создаём проекты, которые делают жизнь людей проще
             </p>
