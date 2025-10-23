@@ -1,0 +1,13 @@
+{
+  "tests": [
+    {
+      "name": "Test get all sounds",
+      "method": "GET",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "sounds": "array"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

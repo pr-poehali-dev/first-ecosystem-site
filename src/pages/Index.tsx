@@ -16,7 +16,8 @@ const Index = () => {
     {
       title: 'WB PVZ Кастомизация',
       description: 'Разработка звуков и визуального оформления для программы выдачи заказов Wildberries. Создаём уникальный опыт для пользователей.',
-      icon: 'Package'
+      icon: 'Package',
+      link: '/sounds'
     },
     {
       title: 'Социальные инициативы',
@@ -80,6 +81,10 @@ const Index = () => {
               <button onClick={() => scrollToSection('contact')} className="text-sm font-medium hover:text-primary transition-colors">
                 Контакты
               </button>
+              <Button onClick={() => window.location.href = '/sounds'} variant="default" size="sm" className="ml-4">
+                <Icon name="Music" size={16} className="mr-2" />
+                WB Звуки
+              </Button>
             </div>
           </div>
         </div>
@@ -165,7 +170,8 @@ const Index = () => {
             {projects.map((project, index) => (
               <Card 
                 key={index} 
-                className="p-8 glass-card glass-hover shadow-lg"
+                className="p-8 glass-card glass-hover shadow-lg cursor-pointer"
+                onClick={() => project.link && (window.location.href = project.link)}
               >
                 <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center mb-6">
                   <Icon name={project.icon as any} className="text-white" size={32} />
@@ -174,6 +180,12 @@ const Index = () => {
                 <p className="text-muted-foreground leading-relaxed">
                   {project.description}
                 </p>
+                {project.link && (
+                  <div className="mt-4 flex items-center gap-2 text-primary">
+                    <span className="text-sm font-medium">Перейти</span>
+                    <Icon name="ArrowRight" size={16} />
+                  </div>
+                )}
               </Card>
             ))}
           </div>
