@@ -50,8 +50,8 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      <nav className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-border z-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+      <nav className="fixed top-0 left-0 right-0 glass border-b border-white/30 z-50 shadow-sm">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -122,7 +122,7 @@ const Index = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="p-8 hover:shadow-lg transition-all duration-300 animate-scale-in border-2">
+            <Card className="p-8 glass-card glass-hover animate-scale-in shadow-lg">
               <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
                 <Icon name="Target" className="text-primary" size={28} />
               </div>
@@ -131,7 +131,7 @@ const Index = () => {
                 Реализация проектов, которые делают повседневную жизнь людей удобнее и комфортнее
               </p>
             </Card>
-            <Card className="p-8 hover:shadow-lg transition-all duration-300 animate-scale-in border-2" style={{ animationDelay: '0.1s' }}>
+            <Card className="p-8 glass-card glass-hover animate-scale-in shadow-lg" style={{ animationDelay: '0.1s' }}>
               <div className="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center mb-6">
                 <Icon name="Globe" className="text-secondary" size={28} />
               </div>
@@ -140,7 +140,7 @@ const Index = () => {
                 Являемся частью ООН на добровольной основе, поддерживая глобальные цели устойчивого развития
               </p>
             </Card>
-            <Card className="p-8 hover:shadow-lg transition-all duration-300 animate-scale-in border-2" style={{ animationDelay: '0.2s' }}>
+            <Card className="p-8 glass-card glass-hover animate-scale-in shadow-lg" style={{ animationDelay: '0.2s' }}>
               <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6">
                 <Icon name="Sparkles" className="text-primary" size={28} />
               </div>
@@ -165,7 +165,7 @@ const Index = () => {
             {projects.map((project, index) => (
               <Card 
                 key={index} 
-                className="p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2"
+                className="p-8 glass-card glass-hover shadow-lg"
               >
                 <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center mb-6">
                   <Icon name={project.icon as any} className="text-white" size={32} />
@@ -189,7 +189,7 @@ const Index = () => {
             </p>
           </div>
           <div className="flex flex-col items-center gap-12">
-            <Card className="p-12 w-full max-w-md text-center border-2">
+            <Card className="p-12 w-full max-w-md text-center glass-card shadow-xl">
               <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Icon name="Earth" className="text-blue-600" size={48} />
               </div>
@@ -198,7 +198,7 @@ const Index = () => {
                 Добровольное партнёрство в рамках программ устойчивого развития
               </p>
             </Card>
-            <Card className="p-12 w-full max-w-md text-center border-2">
+            <Card className="p-12 w-full max-w-md text-center glass-card shadow-xl">
               <div className="w-24 h-24 bg-purple-50 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Icon name="Package" className="text-purple-600" size={48} />
               </div>
@@ -224,7 +224,7 @@ const Index = () => {
               <AccordionItem 
                 key={index} 
                 value={`item-${index}`}
-                className="border-2 rounded-xl px-6 bg-white"
+                className="glass-card rounded-xl px-6 shadow-md"
               >
                 <AccordionTrigger className="text-lg font-semibold hover:no-underline py-6">
                   {item.question}
@@ -246,7 +246,7 @@ const Index = () => {
               Готовы присоединиться к нашим проектам или узнать больше? Мы всегда открыты для диалога
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Card className="p-6 flex items-center gap-4 border-2 hover:shadow-lg transition-all">
+              <Card className="p-6 flex items-center gap-4 glass-card glass-hover shadow-lg">
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
                   <Icon name="Mail" className="text-primary" size={24} />
                 </div>
@@ -255,7 +255,7 @@ const Index = () => {
                   <p className="font-semibold">hello@first-ecosystem.org</p>
                 </div>
               </Card>
-              <Card className="p-6 flex items-center gap-4 border-2 hover:shadow-lg transition-all">
+              <Card className="p-6 flex items-center gap-4 glass-card glass-hover shadow-lg">
                 <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center">
                   <Icon name="Phone" className="text-secondary" size={24} />
                 </div>
