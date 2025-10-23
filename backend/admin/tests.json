@@ -1,0 +1,22 @@
+{
+  "tests": [
+    {
+      "name": "Test unauthorized access",
+      "method": "GET",
+      "expectedStatus": 401,
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Test authorized access",
+      "method": "GET",
+      "headers": {
+        "X-Admin-Password": "2501"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "sounds": "array"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
