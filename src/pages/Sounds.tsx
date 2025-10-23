@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
+import { Slider } from '@/components/ui/slider';
 
 interface Sound {
   id: number;
@@ -22,6 +23,9 @@ const Sounds = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<{ username: string; email: string } | null>(null);
   const [loading, setLoading] = useState(false);
+  const [playingSound, setPlayingSound] = useState<number | null>(null);
+  const [volume, setVolume] = useState<number>(0.5);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
 
   const AUTH_URL = 'https://functions.poehali.dev/d10a7354-e22a-4a86-ac62-30159875cce8';
@@ -153,6 +157,64 @@ const Sounds = () => {
     });
   };
 
+  const togglePlayPause = (sound: Sound) => {
+    if (playingSound === sound.id) {
+      audioRef.current?.pause();
+      setPlayingSound(null);
+    } else {
+      if (audioRef.current) {
+        audioRef.current.src = sound.file_url;
+        audioRef.current.volume = volume;
+        audioRef.current.play();
+        setPlayingSound(sound.id);
+      }
+    }
+  };
+
+  const handleVolumeChange = (value: number[]) => {
+    const newVolume = value[0];
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
+  };
+
+  useEffect(() => {
+    const audio = new Audio();
+    audioRef.current = audio;
+
+    audio.addEventListener('ended', () => {
+      setPlayingSound(null);
+    });
+
+    return () => {
+      audio.pause();
+      audio.src = '';
+    };
+  }, []);
+
+  const handleVolumeChange = (value: number[]) => {
+    const newVolume = value[0];
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
+  };
+
+  useEffect(() => {
+    const audio = new Audio();
+    audioRef.current = audio;
+
+    audio.addEventListener('ended', () => {
+      setPlayingSound(null);
+    });
+
+    return () => {
+      audio.pause();
+      audio.src = '';
+    };
+  }, []);
+
   const handleDownload = async (sound: Sound) => {
     if (!isAuthenticated) {
       toast({
@@ -218,7 +280,10 @@ const Sounds = () => {
               </Button>
               {isAuthenticated ? (
                 <div className="flex items-center gap-3">
-                  <span className="text-sm text-muted-foreground">Привет, {user?.username}!</span>
+                  <Button variant="ghost" onClick={() => window.location.href = '/profile'}>
+                    <Icon name="User" size={16} className="mr-2" />
+                    {user?.username}
+                  </Button>
                   <Button variant="outline" onClick={handleLogout} size="sm">
                     Выйти
                   </Button>
@@ -315,14 +380,26 @@ const Sounds = () => {
                 <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                   {sound.description}
                 </p>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Icon name="Download" size={16} />
-                    <span>{sound.downloads_count}</span>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Button 
+                      onClick={() => togglePlayPause(sound)} 
+                      size="sm" 
+                      variant="outline"
+                      className="flex-1"
+                    >
+                      <Icon name={playingSound === sound.id ? "Pause" : "Play"} size={16} className="mr-1" />
+                      {playingSound === sound.id ? 'Пауза' : 'Прослушать'}
+                    </Button>
+                    <Button onClick={() => handleDownload(sound)} size="sm">
+                      <Icon name="Download" size={16} className="mr-1" />
+                      Скачать
+                    </Button>
                   </div>
-                  <Button onClick={() => handleDownload(sound)} size="sm">
-                    Скачать
-                  </Button>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Icon name="Download" size={14} />
+                    <span>{sound.downloads_count} скачиваний</span>
+                  </div>
                 </div>
               </Card>
             ))}

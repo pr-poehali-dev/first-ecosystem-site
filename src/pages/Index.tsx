@@ -22,7 +22,8 @@ const Index = () => {
     {
       title: 'Социальные инициативы',
       description: 'Реализация проектов в рамках добровольного сотрудничества с ООН, направленных на улучшение качества жизни людей.',
-      icon: 'Users'
+      icon: 'Users',
+      link: '/coming-soon'
     },
     {
       title: 'Инновационные решения',
@@ -92,10 +93,10 @@ const Index = () => {
 
       <section id="home" className="pt-32 pb-24 px-6">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center animate-fade-in">
+          <div className="flex flex-col items-center justify-center text-center animate-fade-in">
             <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">ANDREAS FIRST</h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">Создаём проекты, которые делают жизнь людей и сотрудников Wildberries проще</p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mb-12 leading-relaxed">Создаём проекты, которые делают жизнь людей и сотрудников Wildberries проще</p>
+            <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 size="lg" 
                 onClick={() => scrollToSection('projects')}
@@ -180,8 +181,10 @@ const Index = () => {
                 </p>
                 {project.link && (
                   <div className="mt-4 flex items-center gap-2 text-primary">
-                    <span className="text-sm font-medium">Перейти</span>
-                    <Icon name="ArrowRight" size={16} />
+                    <span className="text-sm font-medium">
+                      {project.link === '/coming-soon' ? 'Скоро' : 'Перейти'}
+                    </span>
+                    <Icon name={project.link === '/coming-soon' ? 'Clock' : 'ArrowRight'} size={16} />
                   </div>
                 )}
               </Card>
