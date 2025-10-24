@@ -101,7 +101,8 @@ const Index = () => {
       <section id="home" className="pt-32 pb-24 px-6">
         <div className="container mx-auto max-w-6xl">
           <div className="flex flex-col items-center justify-center text-center animate-fade-in">
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight">ANDREAS FIRS</h1>
+            <h1 className="text-6xl md:text-7xl mb-6 tracking-tight font-bold">ANDREAS FIRST
+</h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mb-12 leading-relaxed">Создаём проекты, которые делают жизнь людей и сотрудников Wildberries проще</p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
