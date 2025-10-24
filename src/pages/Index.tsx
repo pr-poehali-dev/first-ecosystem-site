@@ -26,9 +26,16 @@ const Index = () => {
       link: '/coming-soon'
     },
     {
-      title: 'Инновационные решения',
-      description: 'Разработка технологических решений, которые делают повседневную жизнь проще и комфортнее.',
-      icon: 'Lightbulb'
+      title: 'FIRST-21',
+      description: 'Бесплатная обучающая платформа с курсами по фотографии, видео и дизайну от профессионалов.',
+      icon: 'GraduationCap',
+      link: '/learning'
+    },
+    {
+      title: 'Друзья и Сообщество',
+      description: 'Находите коллег, общайтесь, обменивайтесь стикерами и зарабатывайте FMONET.',
+      icon: 'MessageCircle',
+      link: '/friends'
     }
   ];
 

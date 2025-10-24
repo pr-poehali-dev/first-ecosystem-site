@@ -3,12 +3,16 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-  const [user, setUser] = useState<{ username: string; email: string; avatar?: string } | null>(null);
+  const [user, setUser] = useState<{ username: string; email: string; avatar?: string; bio?: string; workplace?: string; fmonet_balance?: number; id?: number } | null>(null);
+  const [bio, setBio] = useState('');
+  const [workplace, setWorkplace] = useState('');
+  const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -24,7 +28,10 @@ const Profile = () => {
       return;
     }
     
-    setUser(JSON.parse(userData));
+    const parsedUser = JSON.parse(userData);
+    setUser(parsedUser);
+    setBio(parsedUser.bio || '');
+    setWorkplace(parsedUser.workplace || '');
   }, [navigate]);
 
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,7 +158,47 @@ const Profile = () => {
                   <Label>Email</Label>
                   <Input value={user.email} disabled className="mt-2" />
                 </div>
+                <div>
+                  <Label>О себе</Label>
+                  <Textarea 
+                    value={bio} 
+                    onChange={(e) => setBio(e.target.value)}
+                    placeholder="Расскажите о себе..."
+                    className="mt-2 min-h-[100px]"
+                  />
+                </div>
+                <div>
+                  <Label>Где работаете</Label>
+                  <Input 
+                    value={workplace} 
+                    onChange={(e) => setWorkplace(e.target.value)}
+                    placeholder="Wildberries, OZON..."
+                    className="mt-2"
+                  />
+                </div>
+                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg">
+                  <div className="flex items-center justify-between">
+                    <span className="text-lg font-semibold">Баланс FMONET</span>
+                    <span className="text-2xl font-bold text-primary">{user.fmonet_balance || 100}</span>
+                  </div>
+                </div>
               </div>
+
+              <Button
+                onClick={async () => {
+                  setSaving(true);
+                  const updatedUser = { ...user, bio, workplace };
+                  localStorage.setItem('user_data', JSON.stringify(updatedUser));
+                  setUser(updatedUser);
+                  toast({ title: 'Сохранено!', description: 'Профиль обновлён' });
+                  setSaving(false);
+                }}
+                className="w-full"
+                disabled={saving}
+              >
+                <Icon name="Save" size={18} className="mr-2" />
+                {saving ? 'Сохранение...' : 'Сохранить изменения'}
+              </Button>
 
               <Button 
                 onClick={handleLogout} 

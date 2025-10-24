@@ -9,6 +9,9 @@ import Sounds from "./pages/Sounds";
 import Admin from "./pages/Admin";
 import Profile from "./pages/Profile";
 import ComingSoon from "./pages/ComingSoon";
+import Learning from "./pages/Learning";
+import Friends from "./pages/Friends";
+import Chat from "./pages/Chat";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +28,9 @@ const App = () => (
           <Route path="/admin" element={<Admin />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/coming-soon" element={<ComingSoon />} />
+          <Route path="/learning" element={<Learning />} />
+          <Route path="/friends" element={<Friends />} />
+          <Route path="/chat/:friendId" element={<Chat />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

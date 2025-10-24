@@ -1,0 +1,42 @@
+{
+  "tests": [
+    {
+      "name": "Search users",
+      "method": "GET",
+      "path": "/?action=search&q=test",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Send friend request",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "action": "send_request",
+        "user_id": 1,
+        "friend_id": 2
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Send message",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "action": "send_message",
+        "sender_id": 1,
+        "receiver_id": 2,
+        "message_type": "text",
+        "content": "Hello!"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
