@@ -180,7 +180,7 @@ const Index = () => {
                 className="p-8 glass-card glass-hover shadow-lg cursor-pointer"
                 onClick={() => project.link && (window.location.href = project.link)}
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center mb-6">
+                <div className="w-16 h-16 from-primary to-secondary rounded-2xl flex items-center justify-center mb-6 bg-slate-700">
                   <Icon name={project.icon as any} className="text-white" size={32} />
                 </div>
                 <h3 className="text-2xl font-semibold mb-4">{project.title}</h3>
