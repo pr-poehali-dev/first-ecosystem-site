@@ -193,28 +193,6 @@ const Sounds = () => {
     };
   }, []);
 
-  const handleVolumeChange = (value: number[]) => {
-    const newVolume = value[0];
-    setVolume(newVolume);
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume;
-    }
-  };
-
-  useEffect(() => {
-    const audio = new Audio();
-    audioRef.current = audio;
-
-    audio.addEventListener('ended', () => {
-      setPlayingSound(null);
-    });
-
-    return () => {
-      audio.pause();
-      audio.src = '';
-    };
-  }, []);
-
   const handleDownload = async (sound: Sound) => {
     if (!isAuthenticated) {
       toast({
